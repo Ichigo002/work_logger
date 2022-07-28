@@ -1,0 +1,15 @@
+<?php include $config['LOGIN_PATH'].'header.phtml'; ?>
+<body>
+        <div class="loginform" style="height: 400px;">
+            <p class="title">SIGN IN</p>
+            <p class="fail">Incorrect Username or Password!</p>
+            <form action="index.php" method="post">
+                <input type="text" style="border: 2px dashed red;" name="user" placeholder="User" required autofocus/>
+
+                <input type="password" style="border: 2px dashed red;" name="pass" placeholder="Password" required/>
+
+                <input type="submit" value="Log In"/>
+            </form>
+        </div>
+    </body>
+</html>

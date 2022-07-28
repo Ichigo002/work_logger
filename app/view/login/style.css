@@ -1,0 +1,99 @@
+body {
+    background-color: rgb(251, 207, 40);
+    background-image: radial-gradient(circle, rgba(255, 161, 71, 1) 0%, rgba(255, 224, 0, 1) 100%),  url(https://img.icons8.com/android/2x/happy.png);
+    background-size: 100%;
+    background-position: left top;
+    background-repeat: repeat;
+    font-family: 'Lato';
+}
+
+.loginform {
+    margin-top: calc(20vh);
+    height: 350px;
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fcfdff;
+    border-radius: 10px;
+    padding: 20px;
+    font-size: 22px;
+
+    -webkit-box-shadow: 2px 2px 24px 0px #7e7e7e;
+    -moz-box-shadow: 2px 2px 24px 0px #7e7e7e;
+    box-shadow: 2px 2px 24px 0px #7e7e7e;
+}
+
+.title {
+    text-align: center;
+    margin-bottom: 15px;
+    padding: 5px;
+    font-size: 35px;
+    font-weight: 900;
+}
+
+.fail {
+    color: #ff0000;
+    text-align: center;
+}
+
+input[type="password"], input[type="text"] {
+    background-image: linear-gradient(260deg, #ffba2f 0%, #f9d628 100%);    
+    
+    font-family: 'lato';
+    font-size: 19px;
+    border-radius: 10px;
+    border: none;
+    padding: 10px 15px 10px 15px;
+    outline: none;
+    width: 230px;
+    margin: 20px;
+}
+
+input[type="submit"] {
+    background-color: rgba(255, 82, 68, 1);
+    background-image: linear-gradient(90deg, rgba(255, 82, 68, 1) 0%, rgba(255, 141, 61, 1) 50%, rgba(255, 58, 24, 1) 100%);
+
+    -webkit-transition: transform 0.2s ease;
+    -moz-transition: transform 0.2s ease;
+    -ms-transition: transform 0.2s ease;
+    -o-transition: transform 0.2s ease;
+    transition: transform 0.2s ease;
+
+    
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    padding: 10px;
+    font-family: 'lato';
+    font-size: 20px;
+    margin-top: 20px;
+    width: 300px;
+}
+
+input[type="submit"]:hover { 
+    transform: rotate(3deg);
+    cursor: pointer;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #000000;
+    font-family: 'lato';
+    opacity: 1; /* Firefox */
+}
+  
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #000000;
+    font-family: 'lato';
+}
+  
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: #000000;
+    font-family: 'lato';
+}
+
+label {
+    font-size: 20px;
+    display: block;
+    padding: 8px;
+    margin-left: 5px;
+}
