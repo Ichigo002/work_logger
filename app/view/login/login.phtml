@@ -1,15 +1,18 @@
 <?php include $config['VIEW_PATH'].'login'.DS.'header.phtml';?>
 <body>
-        <div class="loginform"  <?php if($fail) { echo 'style="height: 400px"'; }?> >
+        <div class="loginform"  style="height: <?php if($fail) { echo '450px'; }?>
+        <?php if($success) { echo '400px'; }?>" >
             <p class="title">SIGN IN</p>
             <?php if($fail) { echo '<p class="fail">Incorrect Username or Password!</p>'; }?>
+            <?php if($success) { echo '<p class="success">Congratulation. You did it!</p>'; }?>
             <form action="index.php" method="post">
                 <input type="text" <?php if($fail) { echo 'style="border: 2px dashed red;"'; }?> name="user" placeholder="User" required autofocus/>
                 <input type="password" <?php if($fail) { echo 'style="border: 2px dashed red;"'; }?> name="pass" placeholder="Password" required/>
                 <input type="submit" value="Log In"/>
-                <input type="hidden" name="pg_v" value="%cntl_login-control">
+                <input type="hidden" name="pg_v" value="%cntl_login">
             </form>
-            <a id="register">don't have account? Register!</a>
+            <?php if(!$success) { echo '<a href="'.mk_ready_redirect(DEF_ADDRESS, array("pg_v" => "register")).'" id="register">dont have account? Register!</a>'; }?>
+
         </div>
     </body>
 </html>

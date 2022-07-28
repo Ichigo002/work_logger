@@ -9,7 +9,7 @@ body {
 
 .loginform {
     margin-top: calc(20vh);
-    height: 350px;
+    height: 380px;
     width: 300px;
     margin-left: auto;
     margin-right: auto;
@@ -36,7 +36,13 @@ body {
     text-align: center;
 }
 
-input[type="password"], input[type="text"] {
+.success {
+    color: #199500;
+    text-align: center;
+    font-size: 25px;
+}
+
+input[type="password"], input[type="text"], input[type="number"] {
     background-image: linear-gradient(260deg, #ffba2f 0%, #f9d628 100%);    
     
     font-family: 'lato';
@@ -68,6 +74,21 @@ input[type="submit"] {
     font-size: 20px;
     margin-top: 20px;
     width: 300px;
+}
+
+#register {
+    text-decoration: none;
+    padding: 10px;
+    margin-top: 25px;
+    float: right;
+    display: block;
+    font-size: 20px;
+    color: #902828;
+}
+
+#register:hover {
+    color: #dd9f9f;
+    cursor: pointer;
 }
 
 input[type="submit"]:hover { 

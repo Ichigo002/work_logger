@@ -1,9 +1,8 @@
 <?php
   if($id = check_correct()) {
-    echo $id;
-    redirect(DEF_ADDRESS, array("pg_v" => "signed/panel"));
+    redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => $id*14-78));
   } else {
-    redirect(DEF_ADDRESS, array("pg_v" => "login/login", "stt" => "err")); // stt - status:Fail error
+    redirect(DEF_ADDRESS, array("pg_v" => "login/login", "stt" => "err301")); // stt - status:Fail error
   }
 
 

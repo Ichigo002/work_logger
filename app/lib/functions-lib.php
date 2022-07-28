@@ -5,7 +5,11 @@ function get($name, $def='') {
 }
 
 function redirect($address, $v_get_array = null) {
-    $r = "Location: ".$address;
+    header("Location: ".mk_ready_redirect($address, $v_get_array));
+}
+
+function mk_ready_redirect($address, $v_get_array = null) {
+    $r = $address;
 
     if($v_get_array != null) {
         $r .= "?";
@@ -13,8 +17,16 @@ function redirect($address, $v_get_array = null) {
             $r .= $namev . "=" . $val . "&";
         }
     }
-    
-    header($r);
+    return $r;
+}
+
+function str_contains_any($haystack, $string_chars) {
+    for ($i=0; $i < strlen($string_chars) ; $i++) { 
+        if(str_contains($haystack, $string_chars[$i])) {
+            return true;
+        }
+    }
+    return false;
 }
     
 

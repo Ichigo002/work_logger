@@ -26,8 +26,9 @@ class Database {
     // Call sql query to db
     public function query($sql) {
         $this->result = $this->conn->query($sql);
-        return isset($this->result);
+        return $this->result;
     }
+
 
     // Check has result got any data
     public function check_result()

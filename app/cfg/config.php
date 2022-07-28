@@ -12,7 +12,7 @@ $config = [
 require $config['LIB_PATH'].'functions-lib.php';
 require $config['LIB_PATH'].'database-lib.php';
 
-$_404  = $config['VIEW_PATH'].'404.phtml';
+$_404  = $config['VIEW_PATH'].'errors'.DS.'404.phtml';
 
 $page  = get('pg_v', 'login/login');
 
@@ -36,8 +36,17 @@ $view  = $config['VIEW_PATH'].$page.'.phtml';
 if(file_exists(($model)) && file_exists(($view))) {
     require $model;
     require $view;
-} else {
-    require $_404;
+    return 0;
+}
+
+switch ($page) {
+    case 'ERR_REG_DB':
+        require $config['VIEW_PATH'].'errors'.DS.'ERR_REG_DB.phtml';
+        break;
+    
+    default:
+        require $_404;
+        break;
 }
 
 ?>
