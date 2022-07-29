@@ -1,0 +1,13 @@
+body {
+    background-color: #ffdbb2;
+}
+
+#table-cnt {
+    margin: 10px;
+}
+
+#table-cnt, th, tr {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+}

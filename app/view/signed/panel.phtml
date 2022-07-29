@@ -2,8 +2,63 @@
 <html>
     <head>
         <title>Work Panel</title>
+        <!--Change this to <style> php code. DELETE THIS-->
+        <link rel="stylesheet" href="view/signed/panel-style.css"/>
     </head>
     <body>
-        Hello keep making this program because this is the best!!!
+        <div id="header">
+            <div id="data-bar">
+                <div> Hi, Wiktor!</div>
+                <div>Hourly Rate: 12 zł/h</div>
+            </div>
+            <div id="btn-bar">
+                <form action="index.php" method="POST"><input type="submit" value="Log Out"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_logout"></form>
+                <form action="index.php" method="POST"><input type="submit" value="Change Password"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_ch_pass"></form>
+                <form action="index.php" method="POST"><input type="submit" value="Update A Rate"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_up_rate"></form>
+            </div>
+            
+        </div>
+        <div id="content">
+                <table id="table-cnt">
+                    <tbody>
+                        <tr id="t-header">
+                            <th>Day</th>
+                            <th>Time</th>
+                            <th>Hours</th>
+                            <th>Pay</th>
+                            <th>Date</th>
+                        </tr>
+                        <tr>
+                            <th>13</th>
+                            <th>7.00 - 16.00</th>
+                            <th>9h</th>
+                            <th>108 zł</th>
+                            <th>00-00-0000</th>
+                        </tr>
+                        <tr>
+                            <th>13</th>
+                            <th>7.00 - 16.00</th>
+                            <th>9h</th>
+                            <th>108 zł</th>
+                            <th>00-00-0000</th>
+                        </tr>
+                        <tr>
+                            <th>13</th>
+                            <th>7.00 - 16.00</th>
+                            <th>9h</th>
+                            <th>108 zł</th>
+                            <th>00-00-0000</th>
+                        </tr>
+                        <tr>
+                            <th>13</th>
+                            <th>7.00 - 16.00</th>
+                            <th>9h</th>
+                            <th>108 zł</th>
+                            <th>00-00-0000</th>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
     </body>
 </html>
