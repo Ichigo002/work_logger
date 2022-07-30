@@ -1,8 +1,9 @@
 <?php include $config['VIEW_PATH'].'login'.DS.'header.phtml';?>
 <body>
         <div class="loginform"  style="height: <?php if($fail) { echo '450px'; }?>
-        <?php if($success) { echo '400px'; }?>" >
-            <p class="title">SIGN IN</p>
+        <?php if($success) { echo '400px'; }?>
+        <?php if($lg) { echo '420px'; }?>" >
+            <p class="title"><?php if($lg) { echo "<span class='success' style='font-size:24px;'>Successfully signed out </span>"; }?>SIGN IN</p>
             <?php if($fail) { echo '<p class="fail">Incorrect Username or Password!</p>'; }?>
             <?php if($success) { echo '<p class="success">Congratulation. You did it!</p>'; }?>
             <form action="index.php" method="post">
