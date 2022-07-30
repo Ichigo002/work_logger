@@ -1,13 +1,168 @@
+/*LOAD FONTS*/
+
+@font-face {
+    font-family: Noto-black;
+    src: url("../../../fonts/NotoSans-Bold.ttf");
+}
+
+@font-face {
+    font-family: Noto-lightItalic;
+    src: url("../../../fonts/NotoSans-LightItalic.ttf");
+}
+
+@font-face {
+    font-family: Noto-mediumItalic;
+    src: url("../../../fonts/NotoSans-MediumItalic.ttf");
+}
+
+/*END FONTS*/
+
 body {
     background-color: #ffdbb2;
+    padding: 0;
+    margin: 0;
+    overflow-y: hidden;
 }
+
+#container {
+    width: 100vw;
+    height: 100vh;
+    background-color: #838383;
+}
+
+#header {
+    background-color: rgb(255, 127, 39);
+    height: 100px;
+    width: 100vw;
+}
+    .hbg {
+        min-width: 250px;
+        text-align: center;
+        height: 60px;
+        line-height: 50px;
+        background-color: rgb(255, 106, 6);
+        padding: 20px;
+        font-size: 30px;
+    }
+
+    #hname {
+        font-family: Noto-mediumItalic;
+        letter-spacing: 1.5px;
+        font-size: 43px;
+        float: left;
+    }
+
+    #hrate {
+        float: right;
+        font-family: Noto-black;
+    }
+
+
+#nav {
+    background-color: rgb(195, 195, 195);
+    float: left;
+    min-width: 275px;
+    padding: 10px;
+    height: calc(100vh - 120px);
+}
+
+    #nav > form > input[type="submit"].nfirsti {
+        margin-top: 15px;
+    }
+
+    #nav > form > input[type="submit"] {
+        font-family: Noto-mediumItalic;
+        outline: none;
+        border: none;
+        background-color: rgb(0, 162, 232);
+        padding: 10px;
+        text-align: center;
+        width: 275px;
+        font-size: 25px;
+        
+        min-height: 50px;
+        margin-bottom: 10px;
+        border-radius: 5px 0 15px 0;
+
+        -webkit-transition: background 0.2s ease;
+        -moz-transition: background 0.2s ease;
+        -ms-transition: background 0.2s ease;
+        -o-transition: background 0.2s ease;
+        transition: background 0.2s ease;
+    }
+
+    #nav > form > input[type="submit"]:hover {
+        background-color: rgb(0, 213, 255);
+        outline: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .nsep {
+        width: 100%;
+        border-bottom: 2px dotted rgb(110, 110, 110);
+
+        margin-top: 10px;
+        margin-bottom: 15px;
+    }
+
+#content {
+    float: left;
+    width: calc(100vw - 295px);
+    height: calc(100vh - 100px);
+    overflow-y: scroll;
+}
+
+
 
 #table-cnt {
-    margin: 10px;
+    font-family: Noto-lightItalic;
+    font-weight: bold;
+    letter-spacing: 1.4px;
+    color: rgb(255, 255, 255);
+    width: 100%;
+    border: 3px solid rgb(70, 73, 149);
+    
 }
 
-#table-cnt, th, tr {
-    border: 1px solid black;
-    border-collapse: collapse;
-    padding: 10px;
+    tr:nth-of-type(odd) {
+        background-color: rgb(92, 95, 180);
+    }
+
+    tr {
+        background-color: rgb(121, 123, 193);
+    }
+
+    th, td {
+        height: 50px;
+    }
+
+    #table-cnt, th, td, tr {
+        text-align: center;
+        border-bottom: 3px solid rgb(70, 73, 149);
+        border-collapse: collapse;
+        padding: 0 12px 0 12px;
+        font-size: 22px;
+    }
+
+    /*Static top label*/
+    table tr th {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: rgb(46, 47, 101);
+      }
+
+/* Scrollbar styles */
+::-webkit-scrollbar {
+    width: 12px;
+    background-color: #7b84c5;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #6640ba; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #8f67e6;  
 }
