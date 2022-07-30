@@ -10,14 +10,14 @@
             <div id="header">
                     <div class="hbg" id="hname"> Hi, Wiktor!</div>
                     <div class="hbg" id="hrate">Hourly Rate: 12 zł/h</div>
-            </div>
+            </div> 
             <div id="nav">
-                    <form action="index.php" method="POST"><input class="nfirsti" type="submit" value="New Log"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_new_log"></form>
-                    <div class="nsep"></div>
-                    <form action="index.php" method="POST"><input type="submit" value="Update A Rate"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_up_rate"></form>
-                    <form action="index.php" method="POST"><input type="submit" value="Change Password"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_ch_pass"></form>
-                    <form action="index.php" method="POST"><input type="submit" value="Sign Out"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_logout"></form>
-                </div>
+                <form action="index.php" method="POST"><input class="nfirsti" type="submit" value="New Log"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_new_log"></form>
+                <div class="nsep"></div>
+                <form action="index.php" method="POST"><input type="submit" value="Update A Rate"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_up_rate"></form>
+                <form action="index.php" method="POST"><input type="submit" value="Change Password"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_ch_pass"></form>
+                <form action="index.php" method="POST"><input type="submit" value="Sign Out"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_logout"></form>
+            </div>
             <div id="content">
                 <table id="table-cnt">
                     <tbody>
@@ -32,6 +32,26 @@
                         <?php echo $table_cnt; ?>
                     </tbody>
                 </table>
+            </div>
+            <div id="window">
+                <div id="w-title">Change Password</div>
+                <div id="w-cnt">
+                    <form action="index.php" method="POST">
+                        <label>Old Password</label>
+                        <input type="password" name="old-pass" autofocus required/>
+
+                        <label>New Password</label>
+                        <input type="password" name="pass1" required/>
+
+                        <label>Repeat New Password</label>
+                        <input type="password" name="pass2" required/>
+
+                        <input type="submit" value="Change!"/>
+                        
+                        <input type="hidden" name="pg_v" value="%cntl_panel"/>
+                        <input type="hidden" name="%typea%" value="btn_ch_pass"/>
+                    </form>
+                </div>
             </div>
         </div>
     </body>
