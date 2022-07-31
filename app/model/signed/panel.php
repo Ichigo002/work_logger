@@ -1,29 +1,26 @@
 <?php 
     $min_table_columns = 16;
     $usrname = "NONE";
+    $rate = "--";
     $table_cnt = get_db_data($min_table_columns);
+    $error = get("err", null);
 
     function get_usr_id() {
-        return (get("idu", -1) + 78) / 14;
+        return decryptID(get("idu"));
     }
 
     function get_db_data($mincl) {
         $cnt = "";
         $i = 0;
         $usr_id = get_usr_id();
-        $usr_bid = -1;
+        $GLOBALS['rate'] = -1;
         $db = new Database();
-
-        if($usr_id == 5.5) {
-            //ERROR NO FOUND ID;
-            return "ERROR_222: NOT FOUND CORRECT USER ID TO FETCH DATA";
-        }
 
         $sql = "SELECT `usr_name`, `usr_bid` FROM `users` WHERE `usr_id` = $usr_id;";
 
         if($db->query($sql)) {
             while($row = $db->get_single_row()) {
-                $usr_bid = $row['usr_bid'];
+                $GLOBALS['rate'] = $row['usr_bid'];
                 $GLOBALS['usrname'] = $row['usr_name'];
             }
         }else {
@@ -49,7 +46,7 @@
                 <td>".$row['w_day']."</td>
                 <td>".$st." - ".$end."</td>
                 <td>".$h."h</td>
-                <td>".$h * $usr_bid."zł</td>
+                <td>".$h * $GLOBALS['rate']."zł</td>
                 <td>".$row['w_date']."</td>
                 <td>".$row['w_desc']."</td></tr>";
                 $i .= 1;

@@ -246,6 +246,22 @@ box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
     width: calc(100% - 12px - 30px - 15px);
 }
 
+.faili > input {
+    border: 2px solid #5c0000 !important;
+    background-color: #ff2828 !important;
+    width: 196px !important;
+    height: 19px !important;
+}
+
+.faili > input:hover {
+    background-color: #ff4e4e !important;
+}
+
+.failt {
+    color: #cb0000;
+    font-size: 20px;
+}
+
 .inputt > input {
     float: right;
     letter-spacing: 2px;

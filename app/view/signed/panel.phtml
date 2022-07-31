@@ -20,7 +20,7 @@
         <div id="container">
             <div id="header">
                     <div class="hbg" id="hname"> Hi, <?php echo $usrname; ?>!</div>
-                    <div class="hbg" id="hrate">Hourly Rate: 12 zł/h</div>
+                    <div class="hbg" id="hrate">Hourly Rate: <?php echo $rate; ?> zł/h</div>
             </div> 
             <div id="nav">
                 <input class="nfirsti btn" type="submit" value="New Log" onclick="showFor('w-new-log')"/>
@@ -46,24 +46,29 @@
             </div>
         </div>
         <!--CHANGE PASSWORD FORM-->
-        <div class="window" id="w-change-pass" style="display: none;">
+        <div class="window" id="w-change-pass" style="display: 
+        <?php if(checkTypeErr("3", $error)) { echo "block"; } else { echo "none"; }?>;">
             <div class="w-topbar">
                 <div class="w-btn-pos">
                     <span onclick="hideFor('w-change-pass')">Close</span>
                 </div>
             </div>
-            <div class="w-title">Change Password</div>
+            <div class="w-title">Change Password <div class="failt">
+                <?php if($error == "302") { echo "Password are not same"; }?>
+                <?php if($error == "301") { echo "Incorrect old password"; }?>
+                <?php if($error == "300") { echo "<span style='color: green;'>Password has been changed</span>"; }?>
+            </div></div>
             <div class="w-cnt">
                 <form action="index.php" method="POST">
-                    <div class="inputt">
+                    <div class="inputt <?php if($error == "301") { echo "faili"; }?>">
                         <label for="old-pass">Old Password: </label>
                         <input type="password" name="old-pass" autofocus required/><br/>
                     </div>
-                    <div class="inputt">
+                    <div class="inputt <?php if($error == "302") { echo "faili"; } ?>">
                         <label for="pass1">New Password: </label>
                         <input type="password" name="pass1" required/><br/>
                     </div>
-                    <div class="inputt">
+                    <div class="inputt <?php if($error == "302") { echo "faili"; }?>">
                         <label for="pass2">Repeat New Password: </label>
                         <input type="password" name="pass2" required/><br/>
                     </div>
@@ -72,17 +77,18 @@
                     </div>
                     <input type="hidden" name="pg_v" value="%cntl_panel"/>
                     <input type="hidden" name="%typea%" value="btn_ch_pass"/>
+                    <input type="hidden" name="id" value="<?php echo get("idu");?>"/>
                 </form>
             </div>
         </div>
         <!--UPDATE A RATE FORM-->
-        <div class="window" id="w-update-rate" style="display: none; height: 320px">
+        <div class="window" id="w-update-rate" style="display: <?php if(checkTypeErr("2", $error)) { echo "block"; } else { echo "none"; }?>; height: 320px">
             <div class="w-topbar">
                 <div class="w-btn-pos">
                     <span onclick="hideFor('w-update-rate')">Close</span>
                 </div>
             </div>
-            <div class="w-title">Update A Rate</div>
+            <div class="w-title">Update A Rate<?php if($error == "200") { echo "<span style='color: green;'>A Rate has been updated</span>"; }?></div>
             <div class="w-cnt">
                 <form action="index.php" method="POST">
                     <div class="inputt">
@@ -113,11 +119,15 @@
                     </div>
                     <div class="inputt">
                         <label for="end_time">End time of work: </label>
-                        <input type="time" name="end_time" autofocus required/><br/>
+                        <input type="time" name="end_time" required/><br/>
                     </div>
                     <div class="inputt">
                         <label for="date">Date: </label>
-                        <input type="date" name="date" autofocus required/><br/>
+                        <input type="date" name="date" required/><br/>
+                    </div>
+                    <div class="inputt">
+                        <label for="txt">Short Description: </label>
+                        <input type="text" name="txt" required/><br/>
                     </div>
                     <div class="inputt-submit">
                         <input class="w-submit" type="submit" value="Update"/>

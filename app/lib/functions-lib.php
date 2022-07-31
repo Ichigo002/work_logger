@@ -28,6 +28,21 @@ function str_contains_any($haystack, $string_chars) {
     }
     return false;
 }
+
+function encryptID($id) {
+    return intval($id) * 3 - 14;
+}
+
+function decryptID($id) {
+    return (intval($id) + 14) / 3;
+}
+
+function checkTypeErr($no_t, $err) {
+    if(isset($err)) {
+        return $err[0] == $no_t;
+    }
+    return false;
+}
     
 
 ?>
