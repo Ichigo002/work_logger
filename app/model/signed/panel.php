@@ -1,7 +1,7 @@
 <?php 
     $min_table_columns = 16;
+    $usrname = "NONE";
     $table_cnt = get_db_data($min_table_columns);
-
 
     function get_usr_id() {
         return (get("idu", -1) + 78) / 14;
@@ -19,11 +19,12 @@
             return "ERROR_222: NOT FOUND CORRECT USER ID TO FETCH DATA";
         }
 
-        $sql = "SELECT `usr_bid` FROM `users` WHERE `usr_id` = $usr_id;";
+        $sql = "SELECT `usr_name`, `usr_bid` FROM `users` WHERE `usr_id` = $usr_id;";
 
         if($db->query($sql)) {
             while($row = $db->get_single_row()) {
                 $usr_bid = $row['usr_bid'];
+                $GLOBALS['usrname'] = $row['usr_name'];
             }
         }else {
             return "ERROR_000: DATABASE RETURNED EMPTY RESULT OR INCORRECT CONNECTING WITH DATABASE.";

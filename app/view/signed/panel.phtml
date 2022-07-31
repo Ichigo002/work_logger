@@ -4,19 +4,30 @@
         <title>Work Panel</title>
         <!--Change this to <style> php code. DELETE THIS-->
         <link rel="stylesheet" href="view/signed/panel-style.css"/>
+
+        <script>
+            function showFor(_id) {
+                document.getElementById(_id).style.display = "block";
+                document.getElementById("container").style.pointerEvents = "none";
+            }
+            function hideFor(_id) {
+                document.getElementById(_id).style.display = "none";
+                document.getElementById("container").style.pointerEvents = "";
+            }
+        </script>
     </head>
     <body>
         <div id="container">
             <div id="header">
-                    <div class="hbg" id="hname"> Hi, Wiktor!</div>
+                    <div class="hbg" id="hname"> Hi, <?php echo $usrname; ?>!</div>
                     <div class="hbg" id="hrate">Hourly Rate: 12 zł/h</div>
             </div> 
             <div id="nav">
-                <form action="index.php" method="POST"><input class="nfirsti" type="submit" value="New Log"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_new_log"></form>
+                <input class="nfirsti btn" type="submit" value="New Log" onclick="showFor('w-new-log')"/>
                 <div class="nsep"></div>
-                <form action="index.php" method="POST"><input type="submit" value="Update A Rate"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_up_rate"></form>
-                <form action="index.php" method="POST"><input type="submit" value="Change Password"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_ch_pass"></form>
-                <form action="index.php" method="POST"><input type="submit" value="Sign Out"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_logout"></form>
+                <input class="btn" type="submit" value="Update A Rate" onclick="showFor('w-update-rate')"/>
+                <input class="btn" type="submit" value="Change Password" onclick="showFor('w-change-pass')"/>
+                <form action="index.php" method="POST"><input class="btn" type="submit" value="Sign Out"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_logout"></form>
             </div>
             <div id="content">
                 <table id="table-cnt">
@@ -33,25 +44,87 @@
                     </tbody>
                 </table>
             </div>
-            <div id="window">
-                <div id="w-title">Change Password</div>
-                <div id="w-cnt">
-                    <form action="index.php" method="POST">
-                        <label>Old Password</label>
-                        <input type="password" name="old-pass" autofocus required/>
-
-                        <label>New Password</label>
-                        <input type="password" name="pass1" required/>
-
-                        <label>Repeat New Password</label>
-                        <input type="password" name="pass2" required/>
-
-                        <input type="submit" value="Change!"/>
-                        
-                        <input type="hidden" name="pg_v" value="%cntl_panel"/>
-                        <input type="hidden" name="%typea%" value="btn_ch_pass"/>
-                    </form>
+        </div>
+        <!--CHANGE PASSWORD FORM-->
+        <div class="window" id="w-change-pass" style="display: none;">
+            <div class="w-topbar">
+                <div class="w-btn-pos">
+                    <span onclick="hideFor('w-change-pass')">Close</span>
                 </div>
+            </div>
+            <div class="w-title">Change Password</div>
+            <div class="w-cnt">
+                <form action="index.php" method="POST">
+                    <div class="inputt">
+                        <label for="old-pass">Old Password: </label>
+                        <input type="password" name="old-pass" autofocus required/><br/>
+                    </div>
+                    <div class="inputt">
+                        <label for="pass1">New Password: </label>
+                        <input type="password" name="pass1" required/><br/>
+                    </div>
+                    <div class="inputt">
+                        <label for="pass2">Repeat New Password: </label>
+                        <input type="password" name="pass2" required/><br/>
+                    </div>
+                    <div class="inputt-submit">
+                        <input class="w-submit" type="submit" value="Change"/>
+                    </div>
+                    <input type="hidden" name="pg_v" value="%cntl_panel"/>
+                    <input type="hidden" name="%typea%" value="btn_ch_pass"/>
+                </form>
+            </div>
+        </div>
+        <!--UPDATE A RATE FORM-->
+        <div class="window" id="w-update-rate" style="display: none; height: 320px">
+            <div class="w-topbar">
+                <div class="w-btn-pos">
+                    <span onclick="hideFor('w-update-rate')">Close</span>
+                </div>
+            </div>
+            <div class="w-title">Update A Rate</div>
+            <div class="w-cnt">
+                <form action="index.php" method="POST">
+                    <div class="inputt">
+                        <label for="rate">New Rate [z/h]: </label>
+                        <input type="number" name="rate" min="1" autofocus required/><br/>
+                    </div>
+                    <div class="inputt-submit">
+                        <input class="w-submit" type="submit" value="Update"/>
+                    </div>
+                    <input type="hidden" name="pg_v" value="%cntl_panel"/>
+                    <input type="hidden" name="%typea%" value="btn_up_rate"/>
+                </form>
+            </div>
+        </div>
+        <!--NEW LOG FORM-->
+        <div class="window" id="w-new-log" style="display: none;">
+            <div class="w-topbar">
+                <div class="w-btn-pos">
+                    <span onclick="hideFor('w-new-log')">Close</span>
+                </div>
+            </div>
+            <div class="w-title">New Log</div>
+            <div class="w-cnt">
+                <form action="index.php" method="POST">
+                    <div class="inputt">
+                        <label for="st_time">Start time of work: </label>
+                        <input type="time" name="st_time" autofocus required/><br/>
+                    </div>
+                    <div class="inputt">
+                        <label for="end_time">End time of work: </label>
+                        <input type="time" name="end_time" autofocus required/><br/>
+                    </div>
+                    <div class="inputt">
+                        <label for="date">Date: </label>
+                        <input type="date" name="date" autofocus required/><br/>
+                    </div>
+                    <div class="inputt-submit">
+                        <input class="w-submit" type="submit" value="Update"/>
+                    </div>
+                    <input type="hidden" name="pg_v" value="%cntl_panel"/>
+                    <input type="hidden" name="%typea%" value="btn_new_log"/>
+                </form>
             </div>
         </div>
     </body>
