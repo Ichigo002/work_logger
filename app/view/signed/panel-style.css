@@ -75,6 +75,15 @@ body {
         margin-top: 15px;
     }
 
+    .del {
+        background-color: rgb(196, 0, 0) !important;
+        color: #ffffff !important;
+    }
+
+    .del:hover {
+        background-color: rgb(255, 0, 0) !important;
+    }
+
     .btn {
         font-family: Noto-mediumItalic;
         outline: none;
@@ -118,7 +127,24 @@ body {
     overflow-y: scroll;
 }
 
+.desc-link {
+    text-decoration: none;
+    color: #ffffff;
 
+    -webkit-transition: color 0.2s ease-in;
+    -moz-transition: color 0.2s ease-in;
+    -ms-transition: color 0.2s ease-in;
+    -o-transition: color 0.2s ease-in;
+    transition: color 0.2s ease-in;
+}
+
+.desc-link-ext {
+    color: #e5ff00;
+}
+
+.desc-link:hover {
+    color: #f0ff1a;
+}
 
 #table-cnt {
     font-family: Noto-lightItalic;

@@ -6,6 +6,8 @@
         <link rel="stylesheet" href="view/signed/panel-style.css"/>
 
         <script>
+            window.onload = Start;
+
             function showFor(_id) {
                 document.getElementById(_id).style.display = "block";
                 document.getElementById("container").style.pointerEvents = "none";
@@ -14,6 +16,11 @@
                 document.getElementById(_id).style.display = "none";
                 document.getElementById("container").style.pointerEvents = "";
             }
+
+            function Start() {
+                <?php if($desc != "") { echo "showFor('w-desc');\n"; } ?>
+            }
+
         </script>
     </head>
     <body>
@@ -24,6 +31,7 @@
             </div> 
             <div id="nav">
                 <input class="nfirsti btn" type="submit" value="New Log" onclick="showFor('w-new-log')"/>
+                <input class="nfirsti btn del" type="submit" value="Delete Log" onclick="showFor('w-del-log')"/>
                 <div class="nsep"></div>
                 <input class="btn" type="submit" value="Update A Rate" onclick="showFor('w-update-rate')"/>
                 <input class="btn" type="submit" value="Change Password" onclick="showFor('w-change-pass')"/>
@@ -88,7 +96,7 @@
                     <span onclick="hideFor('w-update-rate')">Close</span>
                 </div>
             </div>
-            <div class="w-title">Update A Rate<?php if($error == "200") { echo "<span style='color: green;'>A Rate has been updated</span>"; }?></div>
+            <div class="w-title">Update A Rate<div class="failt"><?php if($error == "200") { echo "<div style='color: green;'>A Rate has been updated</div>"; }?></div></div>
             <div class="w-cnt">
                 <form action="index.php" method="POST">
                     <div class="inputt">
@@ -100,41 +108,88 @@
                     </div>
                     <input type="hidden" name="pg_v" value="%cntl_panel"/>
                     <input type="hidden" name="%typea%" value="btn_up_rate"/>
+                    <input type="hidden" name="id" value="<?php echo get("idu");?>"/>
                 </form>
             </div>
         </div>
         <!--NEW LOG FORM-->
-        <div class="window" id="w-new-log" style="display: none;">
+        <div class="window" id="w-new-log" style="display: <?php if(checkTypeErr("1", $error)) {echo "block; height: 420px;"; } else { echo "none;"; } ?>">
             <div class="w-topbar">
                 <div class="w-btn-pos">
                     <span onclick="hideFor('w-new-log')">Close</span>
                 </div>
             </div>
-            <div class="w-title">New Log</div>
+            <div class="w-title">New Log<div class="failt"><?php if($error == "100") { echo "<div style='color: green;'>New Log has been added</div>"; }?></div></div>
             <div class="w-cnt">
                 <form action="index.php" method="POST">
                     <div class="inputt">
                         <label for="st_time">Start time of work: </label>
-                        <input type="time" name="st_time" autofocus required/><br/>
+                        <input type="time" name="st_time" value="07:00" autofocus required/><br/>
                     </div>
                     <div class="inputt">
                         <label for="end_time">End time of work: </label>
-                        <input type="time" name="end_time" required/><br/>
+                        <input type="time" name="end_time"  value="17:00" required/><br/>
                     </div>
                     <div class="inputt">
                         <label for="date">Date: </label>
-                        <input type="date" name="date" required/><br/>
+                        <input type="date" name="date" value="<?php echo $today; ?>" required/><br/>
                     </div>
                     <div class="inputt">
                         <label for="txt">Short Description: </label>
-                        <input type="text" name="txt" required/><br/>
+                        <input type="text" name="txt" max="30"/><br/>
                     </div>
                     <div class="inputt-submit">
-                        <input class="w-submit" type="submit" value="Update"/>
+                        <input class="w-submit" type="submit" value="New"/>
                     </div>
                     <input type="hidden" name="pg_v" value="%cntl_panel"/>
                     <input type="hidden" name="%typea%" value="btn_new_log"/>
+                    <input type="hidden" name="id" value="<?php echo get("idu");?>"/>
+
                 </form>
+            </div>
+        </div>
+        <!--DELETE LOG FORM-->
+        <div class="window" id="w-del-log" style="display: <?php if(checkTypeErr("4", $error)) {echo "block; height: 360px;"; } else { echo "none; height: 340px;"; } ?>">
+            <div class="w-topbar">
+                <div class="w-btn-pos">
+                    <span onclick="hideFor('w-del-log')">Close</span>
+                </div>
+            </div>
+            <div class="w-title">Delete Log<div class="failt">
+                <?php if($error == "401") { echo "Incorrect Confirm Password"; }?>
+                <?php if($error == "402") { echo "Incorrect Day Number to delete"; }?>
+                <?php if($error == "400") { echo "<span style='color: green;'>Succesfully Deleted Log</span>"; }?>
+            </div></div>
+            <div class="w-cnt">
+                <form action="index.php" method="POST">
+                    <div class="inputt <?php if($error == "401") { echo "faili"; } ?>">
+                        <label for="pass">Confirm by Password: </label>
+                        <input type="password" name="pass" autofocus required/><br/>
+                    </div>
+                    <div class="inputt <?php if($error == "402") { echo "faili"; } ?>">
+                        <label for="nod">Delete Log from day: </label>
+                        <input type="number" name="nod" min="1"/><br/>
+                    </div>
+                    <div class="inputt-submit">
+                        <input class="w-submit del" type="submit" value="DELETE"/>
+                    </div>
+                    <input type="hidden" name="pg_v" value="%cntl_panel"/>
+                    <input type="hidden" name="%typea%" value="btn_del_log"/>
+                    <input type="hidden" name="id" value="<?php echo get("idu");?>"/>
+
+                </form>
+            </div>
+        </div>
+        <!--SHOW DESCRIPTION LOG FORM-->
+        <div class="window" id="w-desc" style="display: <?php if($desc != "") {echo "block; height: auto;"; } else { echo "none;"; } ?>">
+            <div class="w-topbar">
+                <div class="w-btn-pos">
+                    <span onclick="hideFor('w-desc')">Close</span>
+                </div>
+            </div>
+            <div class="w-title" style="border-bottom: 2px solid black;">Description</div>
+            <div class="w-cnt" style="padding: 20px; font-size:30px; text-align:center;">
+                <?php if($desc != "") { echo $desc; } ?>
             </div>
         </div>
     </body>

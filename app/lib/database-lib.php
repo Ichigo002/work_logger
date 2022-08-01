@@ -42,6 +42,13 @@ class Database {
         return $this->result->fetch_assoc();
     }
 
+    // Get column of result.
+    public function count_table($name_of_table, $condition_sql="") {
+        //$sql = "SELECT COUNT(*) FROM `$name_of_table` WHERE $condition_sql";
+        $sql = "SELECT COUNT(*) FROM `$name_of_table` WHERE ".$condition_sql.";";
+        return $this->query($sql)->fetch_column();
+    }
+
     protected function connectdb() {
         try {
             $this->conn = new mysqli($this->hostname, $this->username, $this->password, $this->dbname);

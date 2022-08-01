@@ -1,9 +1,15 @@
 <?php 
     $min_table_columns = 16;
+    $max_leng_desc = 15;
+
+
     $usrname = "NONE";
     $rate = "--";
     $table_cnt = get_db_data($min_table_columns);
     $error = get("err", null);
+    $desc = get("shd", "");
+
+    $today = date("Y-m-d");
 
     function get_usr_id() {
         return decryptID(get("idu"));
@@ -40,7 +46,20 @@
                 $lh = date("H", strtotime($row['w_end']));
                 $lm = date("i", strtotime($row['w_end']));
 
-                $h = abs($lh - $sh) + abs($lm - $sm) / 60;
+                $h = round((abs($lh - $sh) + abs($lm - $sm) / 60) * 10) / 10;
+
+                $desc = $row['w_desc'];
+
+                if(strlen($desc) > $GLOBALS['max_leng_desc']) {
+                    $d = $desc;
+                    $desc = "<a class='desc-link' href='".mk_ready_redirect(DEF_ADDRESS, array("pg_v" => "%cntl_panel", "id" => encryptID($usr_id), "%typea%" => "show_desc", "day" => $row['w_day']))."'>";
+
+                    for ($l=0; $l < $GLOBALS['max_leng_desc']; $l++) { 
+                        $desc .= $d[$l];
+                    }
+                    $desc .= " <span class='desc-link-ext'>[...]</span></a>";
+                    
+                }
 
                 $cnt .= "<tr>
                 <td>".$row['w_day']."</td>
@@ -48,8 +67,8 @@
                 <td>".$h."h</td>
                 <td>".$h * $GLOBALS['rate']."zł</td>
                 <td>".$row['w_date']."</td>
-                <td>".$row['w_desc']."</td></tr>";
-                $i .= 1;
+                <td>".$desc."</td></tr>";
+                $i = intval($i + 1);
             }
         } else {
             return "ERROR_111: DATABASE RETURNED EMPTY RESULT OR INCORRECT CONNECTING WITH DATABASE.";
