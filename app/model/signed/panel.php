@@ -33,6 +33,8 @@
             return "ERROR_000: DATABASE RETURNED EMPTY RESULT OR INCORRECT CONNECTING WITH DATABASE.";
         }
 
+        $pay = 0;
+
         $sql = "SELECT `w_id`, `w_day`, `w_start`, `w_end`, `w_date`, `w_desc` FROM `work_logs` WHERE `w_user` = $usr_id;";
         if($db->query($sql)) {
             while($row = $db->get_single_row()) {
@@ -61,11 +63,14 @@
                     
                 }
 
+                $pay_t = $h * $GLOBALS['rate'];
+                $pay = intval($pay_t + $pay);
+
                 $cnt .= "<tr>
                 <td>".$row['w_day']."</td>
                 <td>".$st." - ".$end."</td>
                 <td>".$h."h</td>
-                <td>".$h * $GLOBALS['rate']."zł</td>
+                <td>".$pay_t."zł</td>
                 <td>".$row['w_date']."</td>
                 <td>".$desc."</td></tr>";
                 $i = intval($i + 1);
@@ -73,8 +78,8 @@
         } else {
             return "ERROR_111: DATABASE RETURNED EMPTY RESULT OR INCORRECT CONNECTING WITH DATABASE.";
         }
-
-        for ($j=$i; $j < $mincl; $j++) { 
+        //return $pay;
+        for ($j=$i; $j < $mincl - 3; $j++) { 
             $cnt .= "<tr>
                 <td></td>
                 <td></td>
@@ -83,6 +88,17 @@
                 <td></td>
                 <td></td></tr>";
         }
+
+        for ($j=0; $j < 3; $j++) { 
+            $cnt .= "<tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td></tr>";
+        }
+
         return $cnt;
     }
 
