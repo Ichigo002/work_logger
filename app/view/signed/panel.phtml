@@ -19,6 +19,7 @@
 
             function Start() {
                 <?php if($desc != "") { echo "showFor('w-desc');\n"; } ?>
+                <?php if($uplog_ready) { echo "showFor('w-up-log');\n"; } ?>
             }
 
         </script>
@@ -31,6 +32,7 @@
             </div> 
             <div id="nav">
                 <input class="nfirsti btn" type="submit" value="New Log" onclick="showFor('w-new-log')"/>
+                <input class="nfirsti btn" type="submit" value="Update Log" onclick="showFor('w-up-log')"/>
                 <input class="nfirsti btn del" type="submit" value="Delete Log" onclick="showFor('w-del-log')"/>
                 <div class="nsep"></div>
                 <input class="btn" type="submit" value="Update A Rate" onclick="showFor('w-update-rate')"/>
@@ -119,7 +121,8 @@
                     <span onclick="hideFor('w-new-log')">Close</span>
                 </div>
             </div>
-            <div class="w-title">New Log<div class="failt"><?php if($error == "100") { echo "<div style='color: green;'>New Log has been added</div>"; }?></div></div>
+            <div class="w-title">New Log<div class="failt">
+                <?php if($error == "100") { echo "<div style='color: green;'>New Log has been added</div>"; }?></div></div>
             <div class="w-cnt">
                 <form action="index.php" method="POST">
                     <div class="inputt">
@@ -190,6 +193,57 @@
             <div class="w-title" style="border-bottom: 2px solid black;">Description</div>
             <div class="w-cnt" style="padding: 20px; font-size:30px; text-align:center;">
                 <?php if($desc != "") { echo $desc; } ?>
+            </div>
+        </div>
+        <!--UPDATE LOG FORM-->
+        <div class="window" id="w-up-log" style="display: <?php if(checkTypeErr("5", $error)) {echo "block; height: 420px;"; } else { echo "none;"; } ?>
+        <?php if($uplog_ready) {echo "block; height: 420px;"; } else { echo "block; height: 300px"; } ?>">
+            <div class="w-topbar">
+                <div class="w-btn-pos">
+                    <span onclick="hideFor('w-up-log')">Close</span>
+                </div>
+            </div>
+            <div class="w-title">Update Log<div class="failt">
+                <?php if($error == "502") { echo "Incorrect Day Number to delete"; }?>
+                <?php if($error == "100") { echo "<div style='color: green;'>New Log has been added</div>"; }?></div></div>
+            <div class="w-cnt">
+                <form action="index.php" method="POST" <?php if($uplog_ready) { echo "style='display: none;'"; } ?>>
+                    <div class="inputt <?php if($error == "502") { echo "faili"; } ?>">
+                        <label for="day_no">Day number of log</label>
+                        <input type="number" name="day_no" min="1" value="<?php echo $uplog_stime; ?>" autofocus required/><br/>
+                    </div>
+                    <div class="inputt-submit">
+                        <input class="w-submit" type="submit" value="Edit Log"/>
+                    </div>
+                    <input type="hidden" name="pg_v" value="%cntl_panel"/>
+                    <input type="hidden" name="%typea%" value="btn_load_up_log"/>
+                    <input type="hidden" name="id" value="<?php echo get("idu");?>"/>
+                </form>
+                <form action="index.php" method="POST" <?php if(!$uplog_ready) { echo "style='display: none;'"; } ?>>
+                    <div class="inputt">
+                        <label for="st_time">Start time of work: </label>
+                        <input type="time" name="st_time" value="<?php echo $uplog_sttime; ?>" autofocus required/><br/>
+                    </div>
+                    <div class="inputt">
+                        <label for="end_time">End time of work: </label>
+                        <input type="time" name="end_time"  value="<?php echo $uplog_etime; ?>" required/><br/>
+                    </div>
+                    <div class="inputt">
+                        <label for="date">Date: </label>
+                        <input type="date" name="date" value="<?php echo $uplog_date; ?>" required/><br/>
+                    </div>
+                    <div class="inputt">
+                        <label for="txt">Short Description: </label>
+                        <input type="text" name="txt" max="30" value="<?php echo $uplog_desc; ?>"/><br/>
+                    </div>
+                    <div class="inputt-submit">
+                        <input class="w-submit" type="submit" value="New"/>
+                    </div>
+                    <input type="hidden" name="pg_v" value="%cntl_panel"/>
+                    <input type="hidden" name="%typea%" value="btn_up_log"/>
+                    <input type="hidden" name="id" value="<?php echo get("idu");?>"/>
+
+                </form>
             </div>
         </div>
     </body>

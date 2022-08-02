@@ -43,6 +43,17 @@ function checkTypeErr($no_t, $err) {
     }
     return false;
 }
+
+function check_typed_day($db, $day) {
+    $sql = "SELECT * FROM `work_logs` WHERE `w_day` = $day";
+
+    if($db->query($sql)) {
+        while($db->get_single_row()) {
+            return true;
+        }
+    }
+    return false;
+}
     
 
 ?>

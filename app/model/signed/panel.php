@@ -9,6 +9,13 @@
     $error = get("err", null);
     $desc = get("shd", "");
 
+    $uplog_sttime = get("sttime", "");
+    $uplog_etime = get("etime", "");
+    $uplog_desc = get("desc", "---");
+    $uplog_date = get("date", "");
+    $uplog_ready = get("ready", null) != null;
+
+
     $today = date("Y-m-d");
 
     function get_usr_id() {

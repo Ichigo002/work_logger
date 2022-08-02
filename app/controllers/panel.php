@@ -11,10 +11,13 @@
     // 401 -> Bad old Password to delete;
     // 402 -> Incorrect Day Number Typed;
 
+    // 502 -> Incorrect Day Number Typed;
+
     // 100 -> Success Add New Log!
     // 200 -> Success Update A Rate!
     // 300 -> Success Change Password!
     // 400 -> Success Delete A Log!
+    // 500 -> Success Update A Log!
     
     $_id = decryptID(get("id"));
 
@@ -37,9 +40,55 @@
         case "show_desc": // show description of log
             show_descrpition($_id);
             break;
+        case "btn_load_up_log": // load data to edit from update form
+            load_update_form_data($_id);
+            break;
+        case "btn_up_log":
+            updateLog($_id);
+            break;
         default: 
             redirect(DEF_ADDRESS, array("pg_v" => "PANEL_CONTROLLER_COULD_NOT_FIND:___".$type_action."___"));
         break;
+    }
+
+    function updateLog($_id) {
+        $uplog_sttime = get("st_time", "");
+        $uplog_etime = get("end_time", "");
+        $uplog_desc = get("txt", "");
+        $uplog_date = get("date", "");
+        //$uplog_ready = get("ready", null) != null;
+    }
+
+    function load_update_form_data($_id) {
+        $day_no = get("day_no", "");
+
+        $db = new Database();
+
+        if(!check_typed_day($db, $day_no)) {
+            // Incorrect Day Number
+            redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "502"));
+            return -1;
+        }
+
+        $sql = "SELECT * FROM `work_logs` WHERE `w_day` = $day_no";
+
+        if($db->query($sql)) {
+            while($row = $db->get_single_row()) {
+                $uplog_sttime = $row['w_start'];
+                $uplog_etime  = $row['w_end'];
+                $uplog_desc   = $row['w_desc'];
+                $uplog_date   = $row['w_date'];
+
+                redirect(DEF_ADDRESS, array(
+                "pg_v" => "signed/panel", 
+                "idu" => get("id"), 
+                "sttime" => $uplog_sttime,
+                "etime" => $uplog_etime,
+                "desc" => $uplog_desc,
+                "date" => $uplog_date,
+                "ready" => "1",));
+            }
+        }
     }
 
     function show_descrpition($id) {
@@ -79,20 +128,8 @@
             return "ERROR CONNECT TO DATABASE ";
         }
 
-        //Check does typed day exist
-
-        $sql = "SELECT * FROM `work_logs` WHERE `w_day` = $day_no";
-        $exist = false;
-
-        if($db->query($sql)) {
-            while($db->get_single_row()) {
-                $exist = true;
-            }
-        }
-
         //Delete Log
-
-        if(!$exist) {
+        if(!check_typed_day($db, $day_no)) {
             redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "402"));
             return -1;
         }
