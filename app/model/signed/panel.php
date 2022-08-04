@@ -13,6 +13,7 @@
     $uplog_etime = get("etime", "");
     $uplog_desc = get("desc", "---");
     $uplog_date = get("date", "");
+    $uplog_day =get("day", "ERR_DAY");
     $uplog_ready = get("ready", null) != null;
 
 
@@ -41,8 +42,10 @@
         }
 
         $pay = 0;
+        $cday = 1;
 
-        $sql = "SELECT `w_id`, `w_day`, `w_start`, `w_end`, `w_date`, `w_desc` FROM `work_logs` WHERE `w_user` = $usr_id;";
+        $sql = "SELECT * FROM `work_logs` WHERE `w_user` = $usr_id ORDER BY `work_logs`.`w_date` ASC;";
+        
         if($db->query($sql)) {
             while($row = $db->get_single_row()) {
                 
@@ -74,13 +77,14 @@
                 $pay = intval($pay_t + $pay);
 
                 $cnt .= "<tr>
-                <td>".$row['w_day']."</td>
+                <td>".$cday."</td>
                 <td>".$st." - ".$end."</td>
                 <td>".$h."h</td>
                 <td>".$pay_t."zł</td>
                 <td>".$row['w_date']."</td>
                 <td>".$desc."</td></tr>";
                 $i = intval($i + 1);
+                $cday = intval($cday + 1);
             }
         } else {
             return "ERROR_111: DATABASE RETURNED EMPTY RESULT OR INCORRECT CONNECTING WITH DATABASE.";

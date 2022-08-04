@@ -28,10 +28,12 @@ if($errv == null) {
 function create_account() {
     $db = new Database();
 
-    $name = get("name");
-    $login = get("user");
-    $pass = get("pass1");
-    $bid = get("bid");
+    $name = $db->safety_str(get("name"));
+    $login = $db->safety_str(get("user"));
+    $pass = $db->safety_str(get("pass1"));
+    $bid = $db->safety_str(get("bid"));
+
+    $name = ucfirst($name);
 
     $sql = "INSERT INTO `users`(`usr_id`, `usr_name`, `usr_login`, `usr_password`, `usr_bid`) VALUES (NULL,'$name','$login','$pass','$bid');";
 

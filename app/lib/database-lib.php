@@ -49,6 +49,10 @@ class Database {
         return $this->query($sql)->fetch_column();
     }
 
+    public function safety_str($str) {
+        return $this->conn->real_escape_string($str);
+    }
+
     protected function connectdb() {
         try {
             $this->conn = new mysqli($this->hostname, $this->username, $this->password, $this->dbname);

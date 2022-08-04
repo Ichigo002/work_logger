@@ -38,6 +38,11 @@
                 <input class="btn" type="submit" value="Update A Rate" onclick="showFor('w-update-rate')"/>
                 <input class="btn" type="submit" value="Change Password" onclick="showFor('w-change-pass')"/>
                 <form action="index.php" method="POST"><input class="btn" type="submit" value="Sign Out"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_logout"></form>
+
+                <div id="totals">
+                    <div>2405 zł</div>
+                    <div>140 h</div>
+                </div>
             </div>
             <div id="content">
                 <table id="table-cnt">
@@ -76,11 +81,11 @@
                     </div>
                     <div class="inputt <?php if($error == "302") { echo "faili"; } ?>">
                         <label for="pass1">New Password: </label>
-                        <input type="password" name="pass1" required/><br/>
+                        <input type="password" name="pass1" minlength="6" required/><br/>
                     </div>
                     <div class="inputt <?php if($error == "302") { echo "faili"; }?>">
                         <label for="pass2">Repeat New Password: </label>
-                        <input type="password" name="pass2" required/><br/>
+                        <input type="password" name="pass2" minlength="6" required/><br/>
                     </div>
                     <div class="inputt-submit">
                         <input class="w-submit" type="submit" value="Change"/>
@@ -197,15 +202,15 @@
         </div>
         <!--UPDATE LOG FORM-->
         <div class="window" id="w-up-log" style="display: <?php if(checkTypeErr("5", $error)) {echo "block; height: 420px;"; } else { echo "none;"; } ?>
-        <?php if($uplog_ready) {echo "block; height: 420px;"; } else { echo "block; height: 300px"; } ?>">
+        <?php if($uplog_ready) {echo "block; height: 510px;"; } else { echo "block; height: 300px"; } ?>">
             <div class="w-topbar">
                 <div class="w-btn-pos">
                     <span onclick="hideFor('w-up-log')">Close</span>
                 </div>
             </div>
-            <div class="w-title">Update Log<div class="failt">
+            <div class="w-title">Update Log <span style="color: blue; display: <?php if($uplog_ready) { echo "block;"; } else { echo "none;"; }?>;"> From Day:  <?php echo $uplog_day; ?></span><div class="failt">
                 <?php if($error == "502") { echo "Incorrect Day Number to delete"; }?>
-                <?php if($error == "100") { echo "<div style='color: green;'>New Log has been added</div>"; }?></div></div>
+                <?php if($error == "500") { echo "<div style='color: green;'>A Log has been updated</div>"; }?></div></div>
             <div class="w-cnt">
                 <form action="index.php" method="POST" <?php if($uplog_ready) { echo "style='display: none;'"; } ?>>
                     <div class="inputt <?php if($error == "502") { echo "faili"; } ?>">
@@ -237,10 +242,14 @@
                         <input type="text" name="txt" max="30" value="<?php echo $uplog_desc; ?>"/><br/>
                     </div>
                     <div class="inputt-submit">
-                        <input class="w-submit" type="submit" value="New"/>
+                        <input class="w-submit" type="submit" value="Update" name="update"/>
+                    </div>
+                    <div class="inputt-submit">
+                        <input class="w-submit" type="submit" value="Cancel" name="cancel"/>
                     </div>
                     <input type="hidden" name="pg_v" value="%cntl_panel"/>
                     <input type="hidden" name="%typea%" value="btn_up_log"/>
+                    <input type="hidden" name="day" value="<?php echo $uplog_day; ?>"/>
                     <input type="hidden" name="id" value="<?php echo get("idu");?>"/>
 
                 </form>

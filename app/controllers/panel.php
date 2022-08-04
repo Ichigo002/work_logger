@@ -20,57 +20,76 @@
     // 500 -> Success Update A Log!
     
     $_id = decryptID(get("id"));
+    $_db = new Database();
 
     switch($type_action) {
         case 'btn_new_log': // new log
-            create_new_log($_id);
+            create_new_log($_id, $_db);
             break;
         case 'btn_up_rate': // Update a rate
-            update_rate($_id);
+            update_rate($_id, $_db);
             break;
         case 'btn_ch_pass': // change password
-            change_password($_id);
+            change_password($_id, $_db);
             break;
         case 'btn_logout': // log out
             redirect(DEF_ADDRESS, array("pg_v" => "login/login", "stt" => "lgout"));
             break;   
         case "btn_del_log": // delete log
-            del_log($_id);
+            del_log($_id, $_db);
             break;
         case "show_desc": // show description of log
-            show_descrpition($_id);
+            show_descrpition($_id, $_db);
             break;
         case "btn_load_up_log": // load data to edit from update form
-            load_update_form_data($_id);
+            load_update_form_data($_id, $_db);
             break;
         case "btn_up_log":
-            updateLog($_id);
+            updateLog($_id, $_db);
             break;
         default: 
             redirect(DEF_ADDRESS, array("pg_v" => "PANEL_CONTROLLER_COULD_NOT_FIND:___".$type_action."___"));
         break;
     }
 
-    function updateLog($_id) {
-        $uplog_sttime = get("st_time", "");
-        $uplog_etime = get("end_time", "");
-        $uplog_desc = get("txt", "");
-        $uplog_date = get("date", "");
-        //$uplog_ready = get("ready", null) != null;
+    function updateLog($id, $db) {
+
+        if(get("cancel") == "Cancel") {
+            redirect(DEF_ADDRESS, array(
+                "pg_v" => "signed/panel", 
+                "idu" => get("id"))); 
+            return 0;
+        }
+
+        $uplog_sttime = $db->safety_str(get("st_time", ""));
+        $uplog_etime = $db->safety_str(get("end_time", ""));
+        $uplog_desc = $db->safety_str(get("txt", ""));
+        $uplog_date = $db->safety_str(get("date", ""));
+        $day = $db->safety_str(get("day", ""));
+
+        $record = get_record_by_day($id, $day);
+        $rec_id = $record['w_id'];
+
+        $sql = "UPDATE `work_logs` SET `w_start`='$uplog_sttime',`w_end`='$uplog_etime',`w_date`='$uplog_date',`w_desc`='$uplog_desc' WHERE `w_id` = $rec_id";
+
+        if($db->query($sql)) {
+            redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "500"));
+        }
     }
 
-    function load_update_form_data($_id) {
-        $day_no = get("day_no", "");
+    function load_update_form_data($id, $db) {
+        $day = get("day_no", null);
 
-        $db = new Database();
+        $record = get_record_by_day($id, $day);
 
-        if(!check_typed_day($db, $day_no)) {
+        if($record == null) {
             // Incorrect Day Number
             redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "502"));
             return -1;
         }
 
-        $sql = "SELECT * FROM `work_logs` WHERE `w_day` = $day_no";
+        $rec_id = $record['w_id'];
+        $sql = "SELECT * FROM `work_logs` WHERE `w_id` = $rec_id";
 
         if($db->query($sql)) {
             while($row = $db->get_single_row()) {
@@ -86,18 +105,19 @@
                 "etime" => $uplog_etime,
                 "desc" => $uplog_desc,
                 "date" => $uplog_date,
-                "ready" => "1",));
+                "day" => $day,
+                "ready" => "1",));                
+                return -1;
             }
         }
     }
 
-    function show_descrpition($id) {
+    function show_descrpition($id, $db) {
         $day = get("day", null);
 
         $desc = "NONE DESCRIPTION";
-        $db = new Database();
 
-        $sql = "SELECT `w_desc` FROM `work_logs` WHERE `w_day` = $day";
+        $sql = "SELECT `w_desc` FROM `work_logs` WHERE `w_day` = $day  AND `w_user` = $id" ;
 
         if($db->query($sql)) {
             while($row = $db->get_single_row()) {
@@ -108,11 +128,9 @@
         }
     }
 
-    function del_log($id) {
-        $pass = get("pass", null);
-        $day_no = get("nod", null);
-
-        $db = new Database();
+    function del_log($id, $db) {
+        $pass = $db->safety_str(get("pass", null));
+        $day_no = $db->safety_str(get("nod", null));
 
         $sql = "SELECT `usr_password` FROM `users` WHERE `usr_id` = $id";
 
@@ -128,13 +146,15 @@
             return "ERROR CONNECT TO DATABASE ";
         }
 
-        //Delete Log
-        if(!check_typed_day($db, $day_no)) {
+        $record = get_record_by_day($id, $day_no);
+
+        if($record == null) {
             redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "402"));
             return -1;
         }
+        $rec_id = $record['w_id'];
 
-        $sql = "DELETE FROM `work_logs` WHERE `w_day` = $day_no";
+        $sql = "DELETE FROM `work_logs` WHERE `w_id` = $rec_id";
 
         if($db->query($sql)) {
             redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "400"));
@@ -144,14 +164,15 @@
         }
     }
 
-    function create_new_log($id) {
-        $start_t = get("st_time", null);
-        $end_t = get("end_time", null);
-        $date = get("date", null);
-        $desc = get("txt", null);
+    function create_new_log($id, $db) {
+        
+        $start_t = $db->safety_str(get("st_time", null));
+        $end_t = $db->safety_str(get("end_time", null));
+        $date = $db->safety_str(get("date", null));
+        $desc = $db->safety_str(get("txt", null));
 
-        $db = new Database();
         $count = $db->count_table("work_logs", "`w_user` = $id") + 1;
+
 
         $sql = "INSERT INTO `work_logs`(`w_id`, `w_day`, `w_start`, `w_end`, `w_date`, `w_desc`, `w_user`) VALUES (NULL, $count,'$start_t','$end_t','$date','$desc', $id)";
     
@@ -164,10 +185,8 @@
         }
     }
 
-    function update_rate($id) {
-        $new_rate = intval(get("rate", null));
-
-        $db = new Database();
+    function update_rate($id, $db) {
+        $new_rate = $db->safety_str(intval(get("rate", null)));
 
         $sql = "UPDATE `users` SET `usr_bid` = $new_rate WHERE `usr_id` = $id;";
 
@@ -179,12 +198,10 @@
         }
     }
 
-    function change_password($id) {
-        $old_p = get("old-pass", null);
-        $new_p1 = get("pass1", null);
-        $new_p2 = get("pass2", null);
-
-        $db = new Database();
+    function change_password($id, $db) {
+        $old_p = $db->safety_str(get("old-pass", null));
+        $new_p1 = $db->safety_str(get("pass1", null));
+        $new_p2 = $db->safety_str(get("pass2", null));
 
         $sql = "SELECT `usr_password` FROM `users` WHERE `usr_id` = $id";
 

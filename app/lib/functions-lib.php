@@ -44,15 +44,24 @@ function checkTypeErr($no_t, $err) {
     return false;
 }
 
-function check_typed_day($db, $day) {
-    $sql = "SELECT * FROM `work_logs` WHERE `w_day` = $day";
+function check_day($user_id, $day) {
+    return get_record_by_day($user_id, $day) != null;
+}
+
+function get_record_by_day($user_id, $day) {
+    $db = new Database();
+    $i = 1;
+    $sql = "SELECT * FROM `work_logs` WHERE `w_user` = $user_id ORDER BY `work_logs`.`w_date` ASC;";
 
     if($db->query($sql)) {
-        while($db->get_single_row()) {
-            return true;
+        while($row = $db->get_single_row()) {
+            if(intval($i) == $day) {
+                return $row;
+            }
+            $i = intval($i + 1);
         }
     }
-    return false;
+    return null;
 }
     
 

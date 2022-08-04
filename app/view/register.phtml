@@ -11,8 +11,8 @@
             <form action="index.php" method="post">
                 <input type="text" <?php if($fail == "err298") { echo 'style="border: 2px dashed red;"'; }?> name="name" placeholder="Your Name" required autofocus/>
                 <input type="text" <?php if($fail == "err297") { echo 'style="border: 2px dashed red;"'; }?> name="user" placeholder="User" autofocus/>
-                <input type="password" <?php if($fail == "err303") { echo 'style="border: 2px dashed red;"'; }?> name="pass1" placeholder="Password" required/>
-                <input type="password" <?php if($fail == "err303") { echo 'style="border: 2px dashed red;"'; }?> name="pass2" placeholder="Repeat Password" required/>
+                <input type="password" <?php if($fail == "err303") { echo 'style="border: 2px dashed red;"'; }?> name="pass1" minlength="6" placeholder="Password" required/>
+                <input type="password" <?php if($fail == "err303") { echo 'style="border: 2px dashed red;"'; }?> name="pass2" minlength="6" placeholder="Repeat Password" required/>
                 <input type="number" name="bid" min="1" oninput="this.value = Math.abs(this.value)" placeholder="Cash earned per hour [zł/h]" required/>
                 <input type="submit" value="Sign Up"/>
                 <input type="hidden" name="pg_v" value="%cntl_reg">
