@@ -2,6 +2,8 @@
     $min_table_columns = 16;
     $max_leng_desc = 15;
 
+    $total_h = 0;
+    $total_pay = 0;
 
     $usrname = "NONE";
     $rate = "--";
@@ -16,7 +18,6 @@
     $uplog_day =get("day", "ERR_DAY");
     $uplog_ready = get("ready", null) != null;
 
-
     $today = date("Y-m-d");
 
     function get_usr_id() {
@@ -24,6 +25,7 @@
     }
 
     function get_db_data($mincl) {
+        global $total_h, $total_pay;
         $cnt = "";
         $i = 0;
         $usr_id = get_usr_id();
@@ -41,7 +43,8 @@
             return "ERROR_000: DATABASE RETURNED EMPTY RESULT OR INCORRECT CONNECTING WITH DATABASE.";
         }
 
-        $pay = 0;
+        $tpay = 0;
+        $th = 0;
         $cday = 1;
 
         $sql = "SELECT * FROM `work_logs` WHERE `w_user` = $usr_id ORDER BY `work_logs`.`w_date` ASC;";
@@ -64,7 +67,7 @@
 
                 if(strlen($desc) > $GLOBALS['max_leng_desc']) {
                     $d = $desc;
-                    $desc = "<a class='desc-link' href='".mk_ready_redirect(DEF_ADDRESS, array("pg_v" => "%cntl_panel", "id" => encryptID($usr_id), "%typea%" => "show_desc", "day" => $row['w_day']))."'>";
+                    $desc = "<a class='desc-link' href='".mk_ready_redirect(DEF_ADDRESS, array("pg_v" => "%cntl_panel", "id" => encryptID($usr_id), "%typea%" => "show_desc", "day" => $cday))."'>";
 
                     for ($l=0; $l < $GLOBALS['max_leng_desc']; $l++) { 
                         $desc .= $d[$l];
@@ -74,7 +77,6 @@
                 }
 
                 $pay_t = $h * $GLOBALS['rate'];
-                $pay = intval($pay_t + $pay);
 
                 $cnt .= "<tr>
                 <td>".$cday."</td>
@@ -85,11 +87,16 @@
                 <td>".$desc."</td></tr>";
                 $i = intval($i + 1);
                 $cday = intval($cday + 1);
+                $tpay = intval($pay_t + $tpay);
+                $th = intval($h + $th);
             }
         } else {
             return "ERROR_111: DATABASE RETURNED EMPTY RESULT OR INCORRECT CONNECTING WITH DATABASE.";
         }
-        //return $pay;
+
+        $total_h = $th;
+        $total_pay = $tpay;
+
         for ($j=$i; $j < $mincl - 3; $j++) { 
             $cnt .= "<tr>
                 <td></td>
@@ -109,7 +116,6 @@
                 <td></td>
                 <td></td></tr>";
         }
-
         return $cnt;
     }
 

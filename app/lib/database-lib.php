@@ -1,6 +1,11 @@
 <?php
 
 class Database {
+    /*private $hostname = 'localhost';
+    private $password = '';
+    private $username = 'root';
+    private $dbname   = 'work_time';*/
+
     private $hostname = 'localhost';
     private $password = '';
     private $username = 'root';

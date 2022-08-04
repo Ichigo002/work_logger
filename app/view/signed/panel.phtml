@@ -40,8 +40,9 @@
                 <form action="index.php" method="POST"><input class="btn" type="submit" value="Sign Out"/><input type="hidden" name="pg_v" value="%cntl_panel"><input type="hidden" name="%typea%" value="btn_logout"></form>
 
                 <div id="totals">
-                    <div>2405 zł</div>
-                    <div>140 h</div>
+                    <div style="font-size: 29px;">Totals:</div>
+                    <div><?php echo $total_pay; ?> zł</div>
+                    <div><?php echo $total_h; ?> h</div>
                 </div>
             </div>
             <div id="content">

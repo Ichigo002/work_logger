@@ -116,15 +116,12 @@
         $day = get("day", null);
 
         $desc = "NONE DESCRIPTION";
+        $record = get_record_by_day($id, $day);
 
-        $sql = "SELECT `w_desc` FROM `work_logs` WHERE `w_day` = $day  AND `w_user` = $id" ;
-
-        if($db->query($sql)) {
-            while($row = $db->get_single_row()) {
-                $desc = $row['w_desc'];
-                redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "shd" => $desc));
-                return -1;
-            }
+        if($record != null) {
+            $desc = $record['w_desc'];
+            redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "shd" => $desc));
+            return 0;
         }
     }
 
@@ -171,10 +168,7 @@
         $date = $db->safety_str(get("date", null));
         $desc = $db->safety_str(get("txt", null));
 
-        $count = $db->count_table("work_logs", "`w_user` = $id") + 1;
-
-
-        $sql = "INSERT INTO `work_logs`(`w_id`, `w_day`, `w_start`, `w_end`, `w_date`, `w_desc`, `w_user`) VALUES (NULL, $count,'$start_t','$end_t','$date','$desc', $id)";
+        $sql = "INSERT INTO `work_logs`(`w_id`, `w_start`, `w_end`, `w_date`, `w_desc`, `w_user`) VALUES (NULL,'$start_t','$end_t','$date','$desc', $id)";
     
         if($db->query($sql)) {
             redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "100"));

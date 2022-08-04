@@ -120,6 +120,20 @@ body {
         margin-bottom: 15px;
     }
 
+    #totals {
+        background-color: #ababab;
+        border-radius: 12px;
+        padding: 10px;
+        padding-bottom: 15px;
+        width: calc(100% - 20px);
+        height: 100px;
+        margin-top: calc(100vh - 120px - 600px);
+        font-family: Noto-mediumItalic;
+        font-size: 25px;
+        text-align: center;
+
+    }
+
 #content {
     float: left;
     width: calc(100vw - 295px);
