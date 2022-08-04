@@ -1,0 +1,14 @@
+AddType application/x-httpd-php80 .php
+
+### PROTECT FILES ###
+<FilesMatch "\.(htaccess|htpasswd|ini|fla|psd|log|sh)$">
+Order Allow,Deny
+Deny from all
+</FilesMatch>
+
+RewriteEngine on
+RewriteRule login index.php
+RewriteRule register index.php
+RewriteRule main-panel index.php
+RewriteRule ERROR index.php
+

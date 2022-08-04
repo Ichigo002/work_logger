@@ -1,8 +1,8 @@
 <?php
   if($id = check_correct()) {
-    redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => encryptID($id)));
+    redirect("main-panel", array("pg_v" => "signed/panel", "idu" => encryptID($id)));
   } else {
-    redirect(DEF_ADDRESS, array("pg_v" => "login/login", "stt" => "err301")); // stt - status:Fail error
+    redirect("main-panel", array("pg_v" => "login/login", "stt" => "err301")); // stt - status:Fail error
   }
 
 

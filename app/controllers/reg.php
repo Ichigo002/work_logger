@@ -18,11 +18,11 @@ if($errv == null) {
     try {
         create_account();
     } catch (\Throwable $th) {
-        redirect(DEF_ADDRESS, array("pg_v" => "ERR_REG_DB"));
+        redirect("ERROR", array("pg_v" => "ERR_REG_DB"));
     }
     
 } else {
-    redirect(DEF_ADDRESS, array("pg_v" => "register", "stt" => $errv));
+    redirect("register", array("pg_v" => "register", "stt" => $errv));
 }
 
 function create_account() {
@@ -38,9 +38,9 @@ function create_account() {
     $sql = "INSERT INTO `users`(`usr_id`, `usr_name`, `usr_login`, `usr_password`, `usr_bid`) VALUES (NULL,'$name','$login','$pass','$bid');";
 
     if($db->query($sql)) {
-        redirect(DEF_ADDRESS, array("pg_v" => "login/login", "stt" => "scc010"));
+        redirect("login", array("pg_v" => "login/login", "stt" => "scc010"));
     } else {
-        redirect(DEF_ADDRESS, array("pg_v" => "ERR_REG_DB"));
+        redirect("login", array("pg_v" => "ERR_REG_DB"));
     }
 }
 

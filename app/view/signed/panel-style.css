@@ -2,22 +2,22 @@
 
 @font-face {
     font-family: Noto-black;
-    src: url("../../../fonts/NotoSans-Bold.ttf");
+    src: url("fonts/NotoSans-Bold.ttf");
 }
 
 @font-face {
     font-family: Noto-lightItalic;
-    src: url("../../../fonts/NotoSans-LightItalic.ttf");
+    src: url("fonts/NotoSans-LightItalic.ttf");
 }
 
 @font-face {
     font-family: Noto-mediumItalic;
-    src: url("../../../fonts/NotoSans-MediumItalic.ttf");
+    src: url("fonts/NotoSans-MediumItalic.ttf");
 }
 
 @font-face {
     font-family: Noto-semi;
-    src: url("../../../fonts/NotoSans-SemiBoldItalic.ttf");
+    src: url("fonts/NotoSans-SemiBoldItalic.ttf");
 }
 
 /*END FONTS*/

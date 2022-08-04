@@ -33,7 +33,7 @@
             change_password($_id, $_db);
             break;
         case 'btn_logout': // log out
-            redirect(DEF_ADDRESS, array("pg_v" => "login/login", "stt" => "lgout"));
+            redirect("login", array("pg_v" => "login/login", "stt" => "lgout"));
             break;   
         case "btn_del_log": // delete log
             del_log($_id, $_db);
@@ -48,14 +48,14 @@
             updateLog($_id, $_db);
             break;
         default: 
-            redirect(DEF_ADDRESS, array("pg_v" => "PANEL_CONTROLLER_COULD_NOT_FIND:___".$type_action."___"));
+            redirect("ERROR", array("pg_v" => "PANEL_CONTROLLER_COULD_NOT_FIND:___".$type_action."___"));
         break;
     }
 
     function updateLog($id, $db) {
 
         if(get("cancel") == "Cancel") {
-            redirect(DEF_ADDRESS, array(
+            redirect("main-panel", array(
                 "pg_v" => "signed/panel", 
                 "idu" => get("id"))); 
             return 0;
@@ -73,7 +73,7 @@
         $sql = "UPDATE `work_logs` SET `w_start`='$uplog_sttime',`w_end`='$uplog_etime',`w_date`='$uplog_date',`w_desc`='$uplog_desc' WHERE `w_id` = $rec_id";
 
         if($db->query($sql)) {
-            redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "500"));
+            redirect("main-panel", array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "500"));
         }
     }
 
@@ -84,7 +84,7 @@
 
         if($record == null) {
             // Incorrect Day Number
-            redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "502"));
+            redirect("main-panel", array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "502"));
             return -1;
         }
 
@@ -98,7 +98,7 @@
                 $uplog_desc   = $row['w_desc'];
                 $uplog_date   = $row['w_date'];
 
-                redirect(DEF_ADDRESS, array(
+                redirect("main-panel", array(
                 "pg_v" => "signed/panel", 
                 "idu" => get("id"), 
                 "sttime" => $uplog_sttime,
@@ -120,7 +120,7 @@
 
         if($record != null) {
             $desc = $record['w_desc'];
-            redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "shd" => $desc));
+            redirect("main-panel", array("pg_v" => "signed/panel", "idu" => get("id"), "shd" => $desc));
             return 0;
         }
     }
@@ -135,7 +135,7 @@
             while($row = $db->get_single_row()) {
                 if($row['usr_password'] != $pass) {
                     // Bad old pass
-                    redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "401"));
+                    redirect("main-panel", array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "401"));
                     return -1;
                 }
             }
@@ -146,7 +146,7 @@
         $record = get_record_by_day($id, $day_no);
 
         if($record == null) {
-            redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "402"));
+            redirect("main-panel", array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "402"));
             return -1;
         }
         $rec_id = $record['w_id'];
@@ -154,7 +154,7 @@
         $sql = "DELETE FROM `work_logs` WHERE `w_id` = $rec_id";
 
         if($db->query($sql)) {
-            redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "400"));
+            redirect("main-panel", array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "400"));
             return 0;
         } else {
             return -1;
@@ -171,10 +171,10 @@
         $sql = "INSERT INTO `work_logs`(`w_id`, `w_start`, `w_end`, `w_date`, `w_desc`, `w_user`) VALUES (NULL,'$start_t','$end_t','$date','$desc', $id)";
     
         if($db->query($sql)) {
-            redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "100"));
+            redirect("main-panel", array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "100"));
             return 0;
         } else {
-            redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "101"));
+            redirect("main-panel", array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "101"));
             return -1;
         }
     }
@@ -185,7 +185,7 @@
         $sql = "UPDATE `users` SET `usr_bid` = $new_rate WHERE `usr_id` = $id;";
 
         if($db->query($sql)) {
-            redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "200"));
+            redirect("main-panel", array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "200"));
         } else {
 
             return "ERROR UPDATE A RATE";
@@ -205,19 +205,19 @@
 
                     if($new_p1 != $new_p2) {
                         // Not same pass
-                        redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "302"));
+                        redirect("main-panel", array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "302"));
                         return -1;
                     }
 
                     $sql = "UPDATE `users` SET `usr_password`='$new_p1' WHERE `usr_id` = $id;";
                     if($db->query($sql)) {
                         // Success change password!
-                        redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "300"));
+                        redirect("main-panel", array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "300"));
                         return 0;
                     }
                 } else {
                     // Bad old pass
-                    redirect(DEF_ADDRESS, array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "301"));
+                    redirect("main-panel", array("pg_v" => "signed/panel", "idu" => get("id"), "err" => "301"));
                     return -1;
                 }
             }

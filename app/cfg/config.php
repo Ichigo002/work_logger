@@ -1,7 +1,7 @@
 <?php
 
 //defined("DEF_ADDRESS") || define("DEF_ADDRESS", "http://localhost/work_logger/app/index.php");
-defined("DEF_ADDRESS") || define("DEF_ADDRESS", "http://localhost/work_logger/app/index.php");
+defined("DEF_ADDRESS") || define("DEF_ADDRESS", "http://localhost/work_logger/index.php");
 
 $config = [
     'MODEL_PATH' => APP_PATH.DS.'model'.DS,

@@ -3,7 +3,7 @@
     <head>
         <title>Work Panel</title>
         <!--Change this to <style> php code. DELETE THIS-->
-        <link rel="stylesheet" href="view/signed/panel-style.css"/>
+        <style><?php echo file_get_contents($config['VIEW_PATH'].'signed'.DS.'panel-style.css'); ?></style>
 
         <script>
             window.onload = Start;
