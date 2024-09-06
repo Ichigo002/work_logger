@@ -10,13 +10,14 @@
       $login = get("user");
       $pass = get("pass");
 
+
       $db = new Database();
 
       $sql = "SELECT `usr_id`, `usr_login`, `usr_password` FROM `users`;";
       $db->query($sql);
 
       while($row = $db->get_single_row()) {
-          if($login == $row['usr_login'] && $pass == $row['usr_password']) {
+          if($login == $row['usr_login'] && password_verify($pass, $row['usr_password'])) {
             return $row['usr_id'];
           }
       }

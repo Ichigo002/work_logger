@@ -33,9 +33,11 @@ function create_account() {
     $pass = $db->safety_str(get("pass1"));
     $bid = $db->safety_str(get("bid"));
 
+    $hash = password_hash($pass, PASSWORD_DEFAULT);
+
     $name = ucfirst($name);
 
-    $sql = "INSERT INTO `users`(`usr_id`, `usr_name`, `usr_login`, `usr_password`, `usr_bid`) VALUES (NULL,'$name','$login','$pass','$bid');";
+    $sql = "INSERT INTO `users`(`usr_id`, `usr_name`, `usr_login`, `usr_password`, `usr_bid`) VALUES (NULL,'$name','$login','$hash','$bid');";
 
     if($db->query($sql)) {
         redirect("login", array("pg_v" => "login/login", "stt" => "scc010"));
